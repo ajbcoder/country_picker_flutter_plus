@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:flutter/services.dart';
+
 import '../models/country_info.dart';
 
 /// Enhanced country data manager service with advanced features
@@ -13,13 +15,18 @@ class CountryDataManager {
     }
 
     try {
-      final String jsonString = await rootBundle.loadString('assets/flags/enhanced-countries.json');
+      final String jsonString = await rootBundle.loadString(
+        'packages/country_picker_flutter_plus/assets/flags/enhanced-countries.json',
+      );
+
       _countries = countryInfoFromJson(jsonString);
       return _countries!;
     } catch (e) {
       // Fallback to basic data if enhanced data is not available
       try {
-        final String basicJsonString = await rootBundle.loadString('assets/flags/phone-code-en.json');
+        final String basicJsonString = await rootBundle.loadString(
+          'packages/country_picker_flutter_plus/assets/flags/phone-code-en.json',
+        );
         final basicData = json.decode(basicJsonString) as List;
         _countries = basicData.map((item) => CountryInfo(
           name: item['name'] as String,
